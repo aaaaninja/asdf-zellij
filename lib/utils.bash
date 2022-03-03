@@ -38,11 +38,12 @@ list_all_versions() {
 
 download_release() {
   local version filename url
+  [ "$(uname)" = Darwin ] && os_arch=apple-darwin || os_arch=unknown-linux-musl
   version="$1"
   filename="$2"
 
   # Adapt the release URL convention for zellij
-  url="$GH_REPO/releases/download/v${version}/zellij-x86_64-unknown-linux-musl.tar.gz"
+  url="$GH_REPO/releases/download/v${version}/zellij-x86_64-${os_arch}.tar.gz"
 
   echo "* Downloading $TOOL_NAME release $version..."
   curl "${curl_opts[@]}" -o "$filename" "$url" || fail "Could not download $url"
