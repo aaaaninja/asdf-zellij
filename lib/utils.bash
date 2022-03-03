@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for zellij.
+# Ensure this is the correct GitHub homepage where releases can be downloaded for zellij.
 GH_REPO="https://github.com/zellij-org/zellij"
 TOOL_NAME="zellij"
 TOOL_TEST="zellij --help"
@@ -31,7 +31,7 @@ list_github_tags() {
 }
 
 list_all_versions() {
-  # TODO: Adapt this. By default we simply list the tag names from GitHub releases.
+  # Adapt this. By default we simply list the tag names from GitHub releases.
   # Change this function if zellij has other means of determining installable versions.
   list_github_tags
 }
@@ -41,11 +41,11 @@ download_release() {
   version="$1"
   filename="$2"
 
-  # TODO: Adapt the release URL convention for zellij
-  url="$GH_REPO/archive/v${version}.tar.gz"
+  # Adapt the release URL convention for zellij
+  url="$GH_REPO/releases/download/v${version}/zellij-x86_64-unknown-linux-musl.tar.gz"
 
   echo "* Downloading $TOOL_NAME release $version..."
-  curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
+  curl "${curl_opts[@]}" -o "$filename" "$url" || fail "Could not download $url"
 }
 
 install_version() {
@@ -58,10 +58,10 @@ install_version() {
   fi
 
   (
-    mkdir -p "$install_path"
-    cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+    mkdir -p "$install_path/bin"
+    cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path/bin"
 
-    # TODO: Asert zellij executable exists.
+    # Asert zellij executable exists.
     local tool_cmd
     tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
     test -x "$install_path/bin/$tool_cmd" || fail "Expected $install_path/bin/$tool_cmd to be executable."
